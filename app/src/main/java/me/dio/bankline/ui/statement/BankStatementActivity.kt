@@ -1,11 +1,37 @@
 package me.dio.bankline.ui.statement
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import me.dio.bankline.databinding.ActivityBankStatementBinding
+import me.dio.bankline.domain.Correntista
+import me.dio.bankline.domain.Movimentacao
 
 class BankStatementActivity : AppCompatActivity() {
+
+    private val binding by lazy {
+        ActivityBankStatementBinding.inflate(layoutInflater)
+    }
+
+    private val accountHolder by lazy {
+        intent.getParcelableExtra<Correntista>(EXTRA_ACCOUNT_HOLDER) ?: throw IllegalArgumentException()
+    }
+
+    companion object {
+        const val EXTRA_ACCOUNT_HOLDER = "me.dio.bankline.ui.statement.EXTRA_ACCOUNT_HOLDER"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bank_statement)
+        setContentView(binding.root)
+
+        binding.rvBankStatement.layoutManager = LinearLayoutManager(this)
+
+        findBankStatement()
+    }
+
+    private fun findBankStatement() {
+        val dataSet = ArrayList<Movimentacao>()
     }
 }
